@@ -37,7 +37,8 @@ module.exports.metadata =
 // TOP OF METADATA
 {
   "org.apache.cordova.geolocation": "0.3.6",
-  "cordova-plugin-vibration": "3.1.0"
+  "cordova-plugin-vibration": "3.1.0",
+  "cordova-plugin-whitelist": "1.3.3"
 };
 // BOTTOM OF METADATA
 });
