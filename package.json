@@ -1,0 +1,16 @@
+{
+  "name": "com.phonegap.helloworld",
+  "version": "1.0.0",
+  "displayName": "FinalProject",
+  "cordova": {
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "dependencies": {
+    "cordova-android": "~7.1.4",
+    "cordova-plugin-vibration": "^3.1.0",
+    "org.apache.cordova.geolocation": "^0.3.6"
+  }
+}

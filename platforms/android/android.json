@@ -1,0 +1,87 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {
+      "res/xml/config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "AndroidManifest.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+              "count": 1
+            }
+          ],
+          "/manifest": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
+  },
+  "installed_plugins": {
+    "org.apache.cordova.geolocation": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "org.apache.cordova.geolocation.Coordinates",
+      "file": "plugins/org.apache.cordova.geolocation/www/Coordinates.js",
+      "pluginId": "org.apache.cordova.geolocation",
+      "clobbers": [
+        "Coordinates"
+      ]
+    },
+    {
+      "id": "org.apache.cordova.geolocation.PositionError",
+      "file": "plugins/org.apache.cordova.geolocation/www/PositionError.js",
+      "pluginId": "org.apache.cordova.geolocation",
+      "clobbers": [
+        "PositionError"
+      ]
+    },
+    {
+      "id": "org.apache.cordova.geolocation.Position",
+      "file": "plugins/org.apache.cordova.geolocation/www/Position.js",
+      "pluginId": "org.apache.cordova.geolocation",
+      "clobbers": [
+        "Position"
+      ]
+    },
+    {
+      "id": "org.apache.cordova.geolocation.geolocation",
+      "file": "plugins/org.apache.cordova.geolocation/www/geolocation.js",
+      "pluginId": "org.apache.cordova.geolocation",
+      "clobbers": [
+        "navigator.geolocation"
+      ]
+    }
+  ],
+  "plugin_metadata": {
+    "org.apache.cordova.geolocation": "0.3.6",
+    "cordova-plugin-vibration": "3.1.0"
+  }
+}

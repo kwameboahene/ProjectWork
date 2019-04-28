@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Parts App</title>
+        <!-- JQuery File -->
+
+        <!-- JQuery File -->
+        <script type="text/javascript" src="jquery-1.7.1.js"></script>
+
+        <!-- JQuery Mobile File -->
+        <script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+
+        <!-- CSS File -->
+        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5.css">
+
+        <style type="text/css">
+
+         
+              img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+
+          #searchbar {
+            width: 40%;
+            height: 30px;
+
+
+          }  
+
+
+
+           .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  display: block;
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+        </style>
+
+
+
+       
+
+    </head>
+
+    <body>
+        
+
+      <div data-role="page" id="login-page">
+
+      <div data-role="header">
+    <h1>Log In</h1>
+    </div>
+
+			<div role="main" class="ui-content">
+
+				<br>
+			<img src="game.jpg" id="logolog" style="width:140px;height:100px;">
+			<br>
+          	
+			<form id="sign-in" name="regform" align="center">
+
+          	<input type="email" name="mail" id="mail" placeholder="Email" required>
+          	<br>
+          	<br>
+          	<input type="password" name="passwd" id="passwd" placeholder="Password" required>
+          	<br>
+          	<br>
+          	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+
+          	<p>Don't have an account?<a href="#register-page"> Sign Up</a></p>
+          	
+      </form>
+
+
+      <script type="text/javascript">
+        
+
+         $('#sign-in').submit(function(event) {
+      /* stop form from submitting normally */
+
+      $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/login.php',
+
+        {
+                  mail : $('#mail').val(),
+                 passwd: $('#passwd').val() 
+               },
+            "json"     
+    ).done(function( data ) {
+              //console.log(data);
+              if(data == "correct") {
+
+                window.localStorage.setItem("loggedIn", 1);
+                window.localStorage.setItem("username", mail);
+            self.location.href = "#welcome-page"; 
+            }
+
+              else {
+                console.log(data);
+                alert("Wrong username and password. Try Again");
+              }
+            } );
+  
+
+    });
+
+      </script>
+
+
+
+			</div><!-- /content -->
+
+			<div data-role="footer">
+			</div><!-- /footer -->
+		</div><!-- /page -->
+
+        <div data-role="page" id="register-page">
+
+		<div data-role="header">
+		<h1>Registration</h1>
+		</div><!-- /header -->
+
+		<div role="main" class="ui-content">
+
+		<div><img src="game.jpg" id="logosign" style="width:100px;height:70px;"></div>
+
+		<form id="registerr" name="regform" align="center">
+			       Name:<br>
+          	<input type="text" placeholder="Name" name="name" id="name" required><br>
+          	Phone:<br>
+          	<input type="text" placeholder="Phone Number" name="phonenumber" id="phonenumber" required><br>
+          	Gender:<br>
+          	<select name="gender" id="gender" required>
+                 <option value="Male">Male</option>
+                 <option value="Female">Female</option>
+               </select><br>
+          	
+			Email:<br>
+          	<input type="email" placeholder="Email" name="email" id="email" required><br>
+          	Password:<br>
+          	<input type="password" placeholder="Password" name="password" id="password" required>
+          	<br>
+          	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+          	
+      
+    	
+      </form>
+      <script type="text/javascript">
+
+
+        
+
+    $('#registerr').submit(function(event) {
+      /* stop form from submitting normally */
+
+      $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/registration.php',
+
+        {
+                  name : $('#name').val(),
+                 phonenumber: $('#phonenumber').val(),
+                 gender: $('#gender').val(),
+                 email: $('#email').val(),
+                 password: $('#password').val() 
+               },
+            "json"     
+    ).done(function( data ) {
+              console.log(data);
+              if(data == "success") {
+              self.location.href = "index.html";
+
+            }
+
+            else {
+              alert("Try Sign Up Again");
+            }
+
+            } );
+  
+
+    });
+
+
+
+   
+
+
+
+</script>
+
+		</div><!-- /content -->
+
+		<div data-role="footer">
+		
+		</div><!-- /footer -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="welcome-page">
+
+
+      <div data-role="header">
+        <h1>Welcome</h1>
+
+      </div><!-- /header -->
+
+<div role="main" class="ui-content" >
+
+<script>
+
+document.addEventListener('deviceready', function(){  $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/Product.php',
+            "json"     
+    ).done(function( data ) {
+
+      var data = JSON.parse(data);
+      console.log(data);
+
+      $('#name0').html(data[0]);
+      $('#brand0').html(data[1]);
+      $('#model0').html(data[2]);
+      $('#year0').html(data[3]);
+      data[4] = "GHC "+ data[4];
+      $('#price0').html(data[4]);
+
+      $('#name1').html(data[5]);
+      $('#brand1').html(data[6]);
+      $('#model1').html(data[7]);
+      $('#year1').html(data[8]);
+      data[9] = "GHC "+ data[9];
+      $('#price1').html(data[9]);
+
+
+
+      $('#name2').html(data[10]);
+      $('#brand2').html(data[11]);
+      $('#model2').html(data[12]);
+      $('#year2').html(data[13]);
+      data[14] = "GHC "+ data[14];
+      $('#price2').html(data[14]);
+
+
+
+      $('#name3').html(data[15]);
+      $('#brand3').html(data[16]);
+      $('#model3').html(data[17]);
+      $('#year3').html(data[18]);
+      data[19] = "GHC "+ data[19];
+      $('#price3').html(data[4]);
+
+      $('#name4').html(data[20]);
+      $('#brand4').html(data[21]);
+      $('#model4').html(data[22]);
+      $('#year4').html(data[23]);
+      data[24] = "GHC "+ data[24];
+      $('#price4').html(data[24]);
+       // document.getElementById("name1").value = data[i];
+
+      
+       
+      }
+        
+        );
+
+  });
+
+
+
+
+</script>
+
+
+
+<div class="card">
+
+  <img src="assets/class.jpg" style="width:100%">
+  <h2 id="name0"></h2>
+  <p id="brand0"></p>
+  <p class="price" id="price0"></p>
+  <p id="model0"></p>
+  <p id="year0"></p>
+  <p><button style="background-color:#000; color:#fff;" onclick="addtocart()">Add to Cart</button></p>
+</div> 
+
+<br>
+<br>
+
+
+<br>
+<div class="card">
+
+  <img src="assets/seat.jpg" style="width:100%">
+  <h2 id="name1"></h2>
+  <p id="brand1"></p>
+  <p class="price" id="price1"></p>
+  <p id="model1"></p>
+  <p id="year1"></p>
+  <button onclick="addtocart1()">Add to Cart</button>
+</div> 
+
+<br>
+<br>
+<br>
+
+
+
+<div class="card">
+
+  <img src="assets/ac.jpg" style="width:100%">
+  <h2 id="name2"></h2>
+  <p id="brand2"></p>
+  <p class="price" id="price2"></p>
+  <p id="model2"></p>
+  <p id="year2"></p>
+  <p><button onclick="addtocart2()">Add to Cart</button></p>
+</div> 
+
+<br>
+<br>
+<br>
+
+<div class="card">
+
+  <img src="assets/mirror.jpg" style="width:100%">
+  <h2 id="name3"></h2>
+  <p id="brand3"></p>
+  <p class="price" id="price3"></p>
+  <p id="model3"></p>
+  <p id="year3"></p>
+  <p><button onclick="addtocart3()">Add to Cart</button></p>
+</div> 
+
+<br>
+<br>
+<br>
+
+<div class="card">
+
+  <img src="assets/sclass.jpeg" style="width:100%">
+  <h2 id="name4"></h2>
+  <p id="brand4"></p>
+  <p class="price" id="price4"></p>
+  <p id="model4"></p>
+  <p id="year4"></p>
+  <p><button onclick="addtocart4()">Add to Cart</button></p>
+  
+</div> 
+
+
+
+</div>
+
+  <div data-role="footer" style="float:center;width:100%;" class="footer">
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div style="width:25%;float:left;text-align:center;margin-bottom:-25px;">
+       <a href="#welcome-page" style="margin-left:20px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <p style="margin-left:12px;">Home</p>
+       </div>
+       
+       <div style="width:24%;float:left;text-align:center;margin-bottom:-25px;">
+       <a href="#search-page" align="center" style="margin-left:40px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <p style="margin-left:25px;">Search</p>
+       </div>
+
+       <div style="width:26%;float:left;text-align:center;margin-bottom:-25px;">
+         <a href="#admin-page" style="margin-left:40px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <p style="margin-left:20px;">Admin</p>
+       </div>
+
+        <div style="width:24%;float:left;text-align:center;margin-bottom:-25px;">
+         <a  href="" style="margin-left:45px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+         <p style="margin-left:40px;">Cart</p>
+       </div>
+
+       </div>
+ 
+
+      </div><!-- /footer -->
+      
+      </div>
+
+
+<div data-role="page" id="search-page">
+
+      <div data-role="header">
+        <h1>Search</h1>
+      </div><!-- /header -->
+
+      <div role="main" class="ui-content">
+
+       
+      
+
+      <form id="searchform" name="searchform" align="center">
+      Search:<br>
+      <input type="text" placeholder="Car Maker" name="carmaker" id="carmaker" required>
+      <br>
+      <button class="btn btn-lg btn-primary btn-block" onclick="search()">Search</button>
+
+      </form>
+
+      <div id="searchresults">
+        
+      </div>
+
+
+
+      <script>
+
+      function search() {
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/search.php',
+        {
+                  carmaker : $('#carmaker').val()
+               },
+            "json"     
+    ).done(function( data ) {
+              console.log(data);
+            } );
+
+
+    
+
+      }
+
+
+
+</script>
+     
+
+
+
+      </div>
+
+    <div data-role="footer" style="float:center;width:100%;" class="footer">
+
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div style="width:25%;float:left;text-align:center;margin-bottom:-25px;">
+       <a href="#welcome-page" style="margin-left:20px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline" ></a>
+       <p style="margin-left:12px;">Home</p>
+       </div>
+       
+       <div style="width:24%;float:left;text-align:center;margin-bottom:-25px;">
+       <a href="#search-page" align="center" style="margin-left:40px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <p style="margin-left:25px;">Search</p>
+       </div>
+
+       <div style="width:26%;float:left;text-align:center;margin-bottom:-25px;">
+         <a style="margin-left:40px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <p href="#admin-page" style="margin-left:20px;">Admin</p>
+       </div>
+
+        <div style="width:24%;float:left;text-align:center;margin-bottom:-25px;">
+         <a  style="margin-left:45px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline">Cart</a>
+         <p style="margin-left:40px;">Cart</p>
+       </div>
+
+       </div>
+ 
+
+    </div>
+
+
+            
+    </div>
+
+    <div data-role="page" id="admin-page">
+
+      <div data-role="header">
+        <h1>Add Product</h1>
+      </div><!-- /header -->
+
+      <div role="main" class="ui-content">
+
+       
+      
+
+     
+       <form id="adminadd" name="adminadd" align="center">
+             Name:<br>
+            <input type="text" placeholder="Product Name" name="nameproduct" id="nameproduct" required><br>
+
+            Brand:<br>
+            <input type="text" placeholder="Brand" name="brand" id="brand" required><br>
+
+            Year:<br>
+            <input type="text" placeholder="Year" name="year" id="year" required><br>
+
+            Model:<br>
+            <input type="text" placeholder="Model" name="model" id="model" required><br>
+
+            Price:<br>
+            <input type="text" placeholder="Price" name="price" id="price" required><br>
+            
+            
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Add Product</button>
+
+      </form>
+
+   
+
+
+      <script>
+
+
+    $('#adminadd').submit(function(event) {
+      /* stop form from submitting normally */
+
+      $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/productadd.php',
+
+        {
+                  productname : $('#nameproduct').val(),
+                 brand: $('#brand').val(),
+                 year: $('#year').val(),
+                 model: $('#model').val(),
+                 price: $('#price').val() 
+               },
+            "json"     
+    ).done(function( data ) {
+              if(data == "success") {
+                alert("product added");
+              self.location.href = "#admin-page";
+
+            }
+
+            else {
+              alert("Add Product Again");
+            }
+
+            } );
+  
+
+    });
+
+
+
+
+</script>
+     
+
+
+
+      </div>
+
+    <div data-role="footer" style="float:center;width:100%;" class="footer">
+
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div style="width:25%;float:left;text-align:center;margin-bottom:-25px;">
+       <a href="#welcome-page" style="margin-left:20px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <p style="margin-left:12px;">Home</p>
+       </div>
+       
+       <div style="width:24%;float:left;text-align:center;margin-bottom:-25px;">
+       <a href="#search-page" align="center" style="margin-left:40px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <p style="margin-left:25px;">Search</p>
+       </div>
+
+       <div style="width:26%;float:left;text-align:center;margin-bottom:-25px;">
+         <a href="#admin-page" style="margin-left:40px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <p style="margin-left:20px;">Admin</p>
+       </div>
+
+        <div style="width:24%;float:left;text-align:center;margin-bottom:-25px;">
+         <a  style="margin-left:45px;margin-bottom:-10px;" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline">Cart</a>
+         <p style="margin-left:40px;">Cart</p>
+       </div>
+
+       </div>
+ 
+
+    </div>
+
+
+            
+    </div>
+
+
+
+
+	
+
+	<script type="text/javascript" src="cordova.js"></script>
+  
+    </body>
+</html>

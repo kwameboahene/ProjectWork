@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Parts App</title>
+        <!-- JQuery File -->
+
+        <!-- JQuery File -->
+        <script type="text/javascript" src="jquery-1.7.1.js"></script>
+
+        <!-- JQuery Mobile File -->
+        <script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+
+        <!-- CSS File -->
+        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5.css">
+
+        <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+
+       
+
+        <style type="text/css">
+
+
+          
+         
+              img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+
+          #searchbar {
+            width: 40%;
+            height: 30px;
+
+
+          }  
+
+          table {
+  font-family: 'ABeeZee';
+  font-size: 14px;
+  border-collapse: collapse;
+  width: 355px;
+}
+
+td, th {
+  padding: 10px;
+  text-align: left;
+  margin: 0;
+}
+
+tbody tr:nth-child(2n){
+  background-color: #eee;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+}
+
+
+
+           .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  display: block;
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.footer_icon {
+  padding: 3px;
+  margin-left: -2px;
+  margin-right: -5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  float: left;
+  width: 20%;
+  text-align: center;
+  height: 100%;
+}
+
+.footer {
+  margin: auto;
+  width: 100%;
+  /*padding: 2px;*/
+  height: 65px;
+  position: fixed;
+  bottom:0;
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 15px;
+  /*color: white !important;*/
+}
+
+.clearfix {
+
+  overflow: auto;
+}
+
+
+.ui-content {
+
+  margin-bottom: 65px ;
+
+}
+
+.btnn{
+            background-color: #ddd;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 16px;
+            }
+
+   </style>
+
+
+
+      
+
+    </head>
+
+    <body>
+        
+
+      <div data-role="page" id="login-page">
+
+      <div data-role="header">
+    <h1>Log In</h1>
+    </div>
+
+			<div role="main" class="ui-content">
+
+				<br>
+			<img src="game.jpg" id="logolog" style="width:140px;height:100px;">
+			<br>
+          	
+			<form id="sign-in" name="regform" align="center">
+
+          	<input type="email" name="mail" id="mail" placeholder="Email" required>
+          	<br>
+          	<br>
+          	<input type="password" name="passwd" id="passwd" placeholder="Password" required>
+          	<br>
+          	<br>
+          	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+
+          	<p>Don't have an account?<a href="#register-page"> Sign Up</a></p>
+          	
+      </form>
+
+
+      <script type="text/javascript">
+        
+
+         $('#sign-in').submit(function(event) {
+      /* stop form from submitting normally */
+
+      $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/login.php',
+
+        {
+                  mail : $('#mail').val(),
+                 passwd: $('#passwd').val() 
+               },
+            "json"     
+    ).done(function( data ) {
+              //console.log(data);
+              if(data == "correct") {
+                var eemail = $('#mail').val();
+                window.localStorage.setItem("loggedIn", 1);
+                window.localStorage.setItem("username", $('#mail').val());
+            self.location.href = "#welcome-page"; 
+            }
+
+              else {
+                console.log(data);
+                alert("Wrong username and password. Try Again");
+              }
+            } );
+  
+
+    });
+
+      </script>
+
+
+
+			</div><!-- /content -->
+
+			<div data-role="footer">
+			</div><!-- /footer -->
+		</div><!-- /page -->
+
+        <div data-role="page" id="register-page">
+
+		<div data-role="header">
+		<h1>Registration</h1>
+		</div><!-- /header -->
+
+		<div role="main" class="ui-content">
+
+		<div><img src="game.jpg" id="logosign" style="width:100px;height:70px;"></div>
+
+		<form id="registerr" name="regform" align="center">
+			       Name:<br>
+          	<input type="text" placeholder="Name" name="name" id="name" required><br>
+          	Phone:<br>
+          	<input type="text" placeholder="Phone Number" name="phonenumber" id="phonenumber" required><br>
+          	Gender:<br>
+          	<select name="gender" id="gender" required>
+                 <option value="Male">Male</option>
+                 <option value="Female">Female</option>
+               </select><br>
+          	
+			Email:<br>
+          	<input type="email" placeholder="Email" name="email" id="email" required><br>
+          	Password:<br>
+          	<input type="password" placeholder="Password" name="password" id="password" required>
+          	<br>
+          	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+          	
+      
+    	
+      </form>
+      <script type="text/javascript">
+
+
+        
+
+    $('#registerr').submit(function(event) {
+      /* stop form from submitting normally */
+
+      $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/registration.php',
+
+        {
+                  name : $('#name').val(),
+                 phonenumber: $('#phonenumber').val(),
+                 gender: $('#gender').val(),
+                 email: $('#email').val(),
+                 password: $('#password').val() 
+               },
+            "json"     
+    ).done(function( data ) {
+              console.log(data);
+              if(data == "success") {
+              self.location.href = "index.html";
+
+            }
+
+            else {
+              alert("Try Sign Up Again");
+            }
+
+            } );
+  
+
+    });
+
+
+
+   
+
+
+
+</script>
+
+		</div><!-- /content -->
+
+		<div data-role="footer">
+		
+		</div><!-- /footer -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" id="welcome-page">
+
+
+      <div data-role="header">
+        <h1>Welcome</h1>
+
+      </div><!-- /header -->
+
+<div role="main" class="ui-content">
+
+<button class="btn btn-lg btn-primary" onclick="logout()">log out</button>
+
+<script>
+
+document.addEventListener('deviceready', function(){  $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/Product.php',
+            "json"     
+    ).done(function( data ) {
+
+      var data = JSON.parse(data);
+      console.log(data);
+
+      $('#name0').html(data[0]);
+      $('#brand0').html(data[1]);
+      $('#model0').html(data[2]);
+      $('#year0').html(data[3]);
+      data[4] = "GHC "+ data[4];
+      $('#price0').html(data[4]);
+
+      $('#name1').html(data[5]);
+      $('#brand1').html(data[6]);
+      $('#model1').html(data[7]);
+      $('#year1').html(data[8]);
+      data[9] = "GHC "+ data[9];
+      $('#price1').html(data[9]);
+
+
+
+      $('#name2').html(data[10]);
+      $('#brand2').html(data[11]);
+      $('#model2').html(data[12]);
+      $('#year2').html(data[13]);
+      data[14] = "GHC "+ data[14];
+      $('#price2').html(data[14]);
+
+
+
+      $('#name3').html(data[15]);
+      $('#brand3').html(data[16]);
+      $('#model3').html(data[17]);
+      $('#year3').html(data[18]);
+      data[19] = "GHC "+ data[19];
+      $('#price3').html(data[4]);
+
+      $('#name4').html(data[20]);
+      $('#brand4').html(data[21]);
+      $('#model4').html(data[22]);
+      $('#year4').html(data[23]);
+      data[24] = "GHC "+ data[24];
+      $('#price4').html(data[24]);
+       // document.getElementById("name1").value = data[i];
+
+      
+       
+      }
+        
+        );
+
+  });
+
+function addtocart() {
+  var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/addtocart.php',
+
+        {
+                  productname : $('#name0').html(),
+                 brand: $('#brand0').html(),
+                 year: $('#year0').html(),
+                 model: $('#model0').html(),
+                 price: $('#price0').html(),
+                 email: etail
+               },
+            "json"     
+    ).done(function( data ) {
+ 
+                alert("Added to Cart");
+              self.location.href = "#welcome-page";
+
+  
+
+            } );
+
+ }
+
+ function addtocart1() {
+  var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/addtocart.php',
+
+        {
+                  productname : $('#name1').html(),
+                 brand: $('#brand1').html(),
+                 year: $('#year1').html(),
+                 model: $('#model1').html(),
+                 price: $('#price1').html(),
+                 email: etail
+               },
+            "json"     
+    ).done(function( data ) {
+            
+                alert("Added to Cart");
+              self.location.href = "#welcome-page";
+
+  
+
+            } );
+
+ }
+
+
+
+
+
+
+ function addtocart2() {
+  var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/addtocart.php',
+
+        {
+                  productname : $('#name2').html(),
+                 brand: $('#brand2').html(),
+                 year: $('#year2').html(),
+                 model: $('#model2').html(),
+                 price: $('#price2').html(),
+                 email: etail
+               },
+            "json"     
+    ).done(function( data ) {
+                 alert("Added to Cart");
+              self.location.href = "#welcome-page";
+
+
+            } );
+
+ }
+
+
+
+
+
+
+
+
+ function addtocart3() {
+  var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/addtocart.php',
+
+        {
+                  productname : $('#name3').html(),
+                 brand: $('#brand3').html(),
+                 year: $('#year3').html(),
+                 model: $('#model3').html(),
+                 price: $('#price3').html(),
+                 email: etail
+               },
+            "json"     
+    ).done(function( data ) {
+              alert("Added to Cart");
+             self.location.href = "#welcome-page";
+
+  
+
+            } );
+
+ }
+
+
+
+
+ function addtocart4() {
+  var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/addtocart.php',
+
+        {
+                  productname : $('#name4').html(),
+                 brand: $('#brand4').html(),
+                 year: $('#year4').html(),
+                 model: $('#model4').html(),
+                 price: $('#price4').html(),
+                 email:  etail
+               },
+            "json"     
+    ).done(function( data ) {
+              alert("Added to Cart");
+              self.location.href = "#welcome-page";
+
+  
+
+            } );
+
+ }
+
+
+function CartT() {
+ 
+        var etail = window.localStorage.getItem("username");
+         self.location.href = "#cart-page";
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/cart.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+             
+              var i = 0;
+              var t= 0;
+              $('#cartbody').html("");
+              while( i < data.length) {
+               
+                var table = document.getElementById("cartbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var radioInput = document.createElement('input');
+                radioInput.setAttribute('type', 'checkbox');
+                radioInput.setAttribute('name', 'radio1');
+                radioInput.setAttribute('value', t);
+                cell1.appendChild(radioInput);
+                cell2.appendChild(document.createTextNode(data[i]));
+                cell3.appendChild(document.createTextNode(data[i+1]));
+                cell4.appendChild(document.createTextNode(data[i+2]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+
+      }
+
+
+    function logout() {
+
+
+                window.localStorage.setItem("loggedIn", 0);
+                window.localStorage.setItem("username", "");
+                self.location.href = "#login-page";
+
+    }
+
+
+</script>
+
+
+
+<div class="card">
+
+  <img src="class.jpg" style="width:100%">
+  <h2 id="name0"></h2>
+  <p id="brand0"></p>
+  <p class="price" id="price0"></p>
+  <p id="model0"></p>
+  <p id="year0"></p>
+  <p><button style="background-color:#000; color:#fff" onclick="addtocart()">Add to Cart</button></p>
+</div> 
+
+<br>
+<br>
+
+
+<br>
+<div class="card">
+
+  <img src="seat.jpg" style="width:100%">
+  <h2 id="name1"></h2>
+  <p id="brand1"></p>
+  <p class="price" id="price1"></p>
+  <p id="model1"></p>
+  <p id="year1"></p>
+  <button style="background-color:#000; color:#fff"  onclick="addtocart1()">Add to Cart</button>
+</div> 
+
+<br>
+<br>
+<br>
+
+
+
+<div class="card">
+
+  <img src="ac.jpg" style="width:100%">
+  <h2 id="name2"></h2>
+  <p id="brand2"></p>
+  <p class="price" id="price2"></p>
+  <p id="model2"></p>
+  <p id="year2"></p>
+  <p><button style="background-color:#000; color:#fff"  onclick="addtocart2()">Add to Cart</button></p>
+</div> 
+
+<br>
+<br>
+<br>
+
+<div class="card">
+
+  <img src="mirror.jpg" style="width:100%">
+  <h2 id="name3"></h2>
+  <p id="brand3"></p>
+  <p class="price" id="price3"></p>
+  <p id="model3"></p>
+  <p id="year3"></p>
+  <p><button style="background-color:#000; color:#fff"  onclick="addtocart3()">Add to Cart</button></p>
+</div> 
+
+<br>
+<br>
+<br>
+
+<div class="card">
+
+  <img src="sclass.jpeg" style="width:100%">
+  <h2 id="name4"></h2>
+  <p id="brand4"></p>
+  <p class="price" id="price4"></p>
+  <p id="model4"></p>
+  <p id="year4"></p>
+  <p><button style="background-color:#000; color:#fff" onclick="addtocart4()">Add to Cart</button></p>
+
+</div> 
+
+
+
+</div>
+
+  <div data-role="footer"  class="footer">
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div  class="footer_icon">
+       <a href="#welcome-page" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Home
+       </div>
+       
+       <div  class="footer_icon">
+       <a href="#search-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Search
+       </div>
+
+       <div  class="footer_icon">
+         <a href="#admin-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <br>Admin
+       </div>
+
+        <div  class="footer_icon">
+         <a   onclick="CartT()" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+         <br>Cart
+       </div>
+
+       <div class="footer_icon">
+        <a  onclick="freshorder()" class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            <br> Order
+        </div>
+
+       </div>
+ 
+
+      </div><!-- /footer -->
+      
+      </div>
+
+
+<div data-role="page" id="search-page">
+
+      <div data-role="header">
+        <h1>Search</h1>
+      </div><!-- /header -->
+
+      <div role="main" class="ui-content">
+
+       
+      
+
+      <form id="searchform" name="searchform" align="center">
+      Search:<br>
+      <input type="text" placeholder="Part Name" name="partname" id="partname" required>
+      <br>
+      <input type="text" placeholder="Model" name="modelname" id="modelname" required>
+      <br>
+      <input type="text" placeholder="Model Year" name="modelyear" id="modelyear" required>
+      <br>
+      <button class="btn btn-lg btn-primary btn-block" onclick="search()">Search</button>
+
+      </form>
+
+
+
+    <div class="card" id="classcard">
+
+    
+    <h2 id="searchname"></h2>
+    <p id="searchbrand"></p>
+    <p class="price" id="searchprice"></p>
+    <p id="searchmodel"></p>
+    <p id="searchyear"></p>
+
+
+  </div> 
+
+
+
+      <script>
+
+      function search() {
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/search.php',
+        {
+                  partname : $('#partname').val(),
+                  modelname : $('#modelname').val(),
+                  modelyear : $('#modelyear').val()
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              self.location.href = "#search-page";
+              $("#classcard").prepend('<img src="img.png" style="width:100%">');
+              $('#searchname').html(data[0]);
+              $('#searchbrand').html(data[1]);
+              $('#searchmodel').html(data[2]);
+              $('#searchyear').html(data[3]);
+              data[4] = "GHC "+ data[4];
+              $('#searchprice').html(data[4]);
+
+              $("#classcard").append( '<p><button style="background-color:#000;color:#fff;" onclick="addtoC()">Add to Cart</button></p>');
+            } );
+
+
+      }
+
+      function addtoC() {
+
+        var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/addtocart.php',
+
+        {
+                  productname : $('#searchname').html(),
+                 brand: $('#searchbrand').html(),
+                 year: $('#searchyear').html(),
+                 model: $('#searchmodel').html(),
+                 price: $('#searchprice').html(),
+                 email:  etail
+               },
+            "json"     
+    ).done(function( data ) {
+              alert("Added to Cart");
+              self.location.href = "#welcome-page";
+
+  
+
+            } );
+
+      }
+
+
+
+      function CartT() {
+          
+        var etail = window.localStorage.getItem("username");
+        self.location.href = "#cart-page";
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/cart.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              
+              var i = 0;
+              var t= 0;
+              $('#cartbody').html("");
+              while( i < data.length) {
+               
+                var table = document.getElementById("cartbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var radioInput = document.createElement('input');
+                radioInput.setAttribute('type', 'checkbox');
+                radioInput.setAttribute('name', 'radio1');
+                radioInput.setAttribute('value', t);
+                cell1.appendChild(radioInput);
+                cell2.appendChild(document.createTextNode(data[i]));
+                cell3.appendChild(document.createTextNode(data[i+1]));
+                cell4.appendChild(document.createTextNode(data[i+2]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+
+      }
+
+
+
+
+
+
+</script>
+     
+<!-- <script type="text/javascript" src="Camera.js"></script>  -->
+
+
+      </div>
+
+   <div data-role="footer"  class="footer">
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div  class="footer_icon">
+       <a href="#welcome-page" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Home
+       </div>
+       
+       <div  class="footer_icon">
+       <a href="#search-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Search
+       </div>
+
+       <div  class="footer_icon">
+         <a href="#admin-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <br>Admin
+       </div>
+
+        <div  class="footer_icon">
+         <a   onclick="CartT()" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+         <br>Cart
+       </div>
+
+        <div class="footer_icon">
+        <a onclick="freshorder()"  class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            <br> Order
+        </div>
+
+       </div>
+ 
+
+      </div>
+
+
+            
+    </div>
+
+    <div data-role="page" id="admin-page">
+
+      <div data-role="header">
+        <h1>Add Product</h1>
+      </div><!-- /header -->
+
+      <div role="main" class="ui-content">
+      
+       
+      
+
+     
+       <form id="adminadd" name="adminadd" align="center">
+             Name:<br>
+            <input type="text" placeholder="Product Name" name="nameproduct" id="nameproduct" required><br>
+
+            Brand:<br>
+            <input type="text" placeholder="Brand" name="brand" id="brand" required><br>
+
+            Year:<br>
+            <input type="text" placeholder="Year" name="year" id="year" required><br>
+
+            Model:<br>
+            <input type="text" placeholder="Model" name="model" id="model" required><br>
+
+            Price:<br>
+            <input type="text" placeholder="Price" name="price" id="price" required><br>
+
+            
+           <!--   <p><button type="button" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Select Photo</button></p><br>
+
+             <img style="display:none;width:60px;height:60px;" id="smallImage" src="" /> -->
+            
+            
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Add Product</button>
+
+      </form>
+      
+ 
+
+      <script type="text/javascript">
+        
+
+          $('#adminadd').submit(function(event) {
+      /* stop form from submitting normally */
+
+
+       //   var imageURI = $('#smallImage').attr('src'); ;
+
+       //  if (!imageURI) {
+       //      alert('Please select an image first.');
+       //      return;
+       //  }
+
+
+       // imageURI =  window.localStorage.getItem("photodata");
+
+
+
+      $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/productadd.php',
+        {
+                  productname : $('#nameproduct').val(),
+                 brand: $('#brand').val(),
+                 year: $('#year').val(),
+                 model: $('#model').val(),
+                 price: $('#price').val(), 
+               },
+            "json"     
+    ).done(function( data ) {
+              if(data == "success") {
+                alert("product added");
+              self.location.href = "#admin-page";
+              $('#nameproduct').html("");
+              $('#brand').html("");
+                 year: $('#year').html("");
+                 model: $('#model').html("");
+                 price: $('#price').html("");
+
+            }
+
+            else {
+              alert("Add Product Again");
+               self.location.href = "#admin-page";
+            }
+
+            } );
+  
+
+    } );
+
+
+          function CartT() {
+
+        var etail = window.localStorage.getItem("username");
+        self.location.href = "#cart-page";
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/cart.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              
+              var i = 0;
+              var t= 0;
+              $('#cartbody').html("");
+              while( i < data.length) {
+                
+                var table = document.getElementById("cartbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var radioInput = document.createElement('input');
+                radioInput.setAttribute('type', 'checkbox');
+                radioInput.setAttribute('name', 'radio1');
+                radioInput.setAttribute('value', t);
+                cell1.appendChild(radioInput);
+                cell2.appendChild(document.createTextNode(data[i]));
+                cell3.appendChild(document.createTextNode(data[i+1]));
+                cell4.appendChild(document.createTextNode(data[i+2]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+
+      }
+
+      </script>
+     
+
+
+
+      </div>
+
+   <div data-role="footer"  class="footer">
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div  class="footer_icon">
+       <a href="#welcome-page" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Home
+       </div>
+       
+       <div  class="footer_icon">
+       <a href="#search-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Search
+       </div>
+
+       <div  class="footer_icon">
+         <a href="#admin-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <br>Admin
+       </div>
+
+        <div  class="footer_icon">
+         <a   onclick="CartT()" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+         <br>Cart
+       </div>
+
+         <div class="footer_icon">
+        <a onclick="freshorder()"   class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            <br> Order
+        </div>
+
+       </div>
+ 
+
+      </div>
+
+
+            
+    </div>
+
+
+    <div data-role="page" id="cart-page">
+
+      <div data-role="header">
+        <h1>Cart</h1>
+      </div><!-- /header -->
+
+      
+     
+      
+       <div role="main" class="ui-content">
+
+
+<table class="table" id="mytable">
+            <thead>
+              <tr id="headtable">
+                <th>Remove</th>
+                <th scope="col">Name</th>
+                <th scope="col"> Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody id="cartbody">
+              
+            </tbody>
+          </table> <br>
+
+      <button class="btnn" onclick="remove()">Remove Product</button>
+      <button class="btnn" onclick="order()">Order Products</button>
+
+
+ <script type="text/javascript">
+
+     document.addEventListener('deviceready', function () {
+        getCurrentLocation();
+        var etail = window.localStorage.getItem("username");
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/cart.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              //self.location.href = "#cart-page";
+              var i = 0;
+              var t= 0;
+              while( i < data.length) {
+
+                var table = document.getElementById("cartbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var radioInput = document.createElement('input');
+                radioInput.setAttribute('type', 'checkbox');
+                radioInput.setAttribute('name', 'radio1');
+                radioInput.setAttribute('value', t);
+                cell1.appendChild(radioInput);
+                cell2.appendChild(document.createTextNode(data[i]));
+                cell3.appendChild(document.createTextNode(data[i+1]));
+                cell4.appendChild(document.createTextNode(data[i+2]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+
+      });
+
+
+
+
+
+
+
+      function remove() {
+        var etail = window.localStorage.getItem("username");
+        console.log(etail);
+        var favorite = [];
+            $.each($("input[name='radio1']:checked"), function(){            
+                favorite.push($(this).val());
+            });
+
+            if( favorite.length == 0) {
+              alert("Select Row to be deleted");
+            }
+
+            else{
+
+            favorite = favorite.reverse();
+             
+
+            $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/remove.php',
+
+        {
+                  products : favorite,
+                 email:  etail
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              if(data[0] == "success") {
+              alert("Items Removed");
+              self.location.href = "#cart-page";
+              $('#cartbody').html("");
+        var etail = window.localStorage.getItem("username");
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/cart.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              self.location.href = "#cart-page";
+              var i = 0;
+              var t= 0;
+              while( i < data.length) {
+
+                var table = document.getElementById("cartbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var radioInput = document.createElement('input');
+                radioInput.setAttribute('type', 'checkbox');
+                radioInput.setAttribute('name', 'radio1');
+                radioInput.setAttribute('value', t);
+                cell1.appendChild(radioInput);
+                cell2.appendChild(document.createTextNode(data[i]));
+                cell3.appendChild(document.createTextNode(data[i+1]));
+                cell4.appendChild(document.createTextNode(data[i+2]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+            }
+
+            else {
+              alert("Try Again");
+            }
+
+  
+
+            } );
+
+}
+
+      }
+
+
+
+    function order() {
+
+
+      var etail = window.localStorage.getItem("username");
+   $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/Order.php',
+        {
+                 email:  etail
+               },
+            "json"     
+    ).done(function( data ) {
+              var data = JSON.parse(data);
+              console.log(data);
+              if(data[0]=="success") {
+              alert("Products Ordered");
+              self.location.href = "#cart-page";
+              $('#cartbody').html("");
+
+               $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/phone.php',
+
+        {
+                  email:  etail
+                 
+               },
+            "json"     
+    ).done(function( data ) {
+              var data = JSON.parse(data);
+              console.log(data);
+
+              getCurrentLocation();
+              local = window.localStorage.getItem("coordinates");
+
+              array = 'Hello I placed an order for your products' + '\n' + 'Here are my cordinates when can we meet up'+ '\n' + local ; 
+              window.plugins.socialsharing.shareViaSMS(array, data[0], function(msg) {console.log('ok: ' + msg)}, function(msg) {alert('error: ' + msg)});
+              
+              navigator.vibrate(2000);
+              }
+             );
+
+
+}
+  
+
+            } );
+
+
+      }
+
+
+
+
+
+function getCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}
+
+function onSuccess(position) {
+    var longitude = position.coords.longitude;
+    var latitude = position.coords.latitude;
+    var timeStamp = position.coords.timestamp;
+
+    var coordinates = "Longitude: " + longitude + " Latitude: " + latitude;
+    //alert(coordinates);
+
+    window.localStorage.setItem("coordinates", coordinates);
+
+
+}
+function onError(error) {
+    alert("code: "+ error.code + " message: " + error.message);
+}
+
+
+
+
+</script>
+  </div>
+
+   <div data-role="footer"  class="footer">
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div  class="footer_icon">
+       <a href="#welcome-page" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Home
+       </div>
+       
+       <div  class="footer_icon">
+       <a href="#search-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Search
+       </div>
+
+       <div  class="footer_icon">
+         <a href="#admin-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <br>Admin
+       </div>
+
+        <div  class="footer_icon">
+         <a  href="#cart-page" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+         <br>Cart
+       </div>
+
+        <div class="footer_icon">
+        <a onclick="freshorder()" class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            <br>Order
+        </div>
+
+       </div>
+ 
+
+      </div>
+
+
+            
+    </div>
+
+    <div data-role="page" id="order-page">
+
+      <div data-role="header">
+        <h1>Order History</h1>
+      </div><!-- /header -->
+
+      
+     
+      
+       <div role="main" class="ui-content">
+
+
+<table class="table" id="mytable1">
+            <thead>
+              <tr id="headtable1">
+                <th scope="col">Name</th>
+                <th scope="col"> Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Year</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody id="orderbody">
+              
+            </tbody>
+          </table> <br>
+
+
+ <script type="text/javascript">
+
+     document.addEventListener('deviceready', function () {
+
+        var etail = window.localStorage.getItem("username");
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/getorder.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              var i = 0;
+              var t= 0;
+
+              while( i < data.length) {
+
+                var table = document.getElementById("orderbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                 cell1.appendChild(document.createTextNode(data[i]));
+                cell2.appendChild(document.createTextNode(data[i+1]));
+                cell3.appendChild(document.createTextNode(data[i+2]));
+                cell4.appendChild(document.createTextNode(data[i+3]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+
+      });
+
+
+
+
+
+
+
+      function freshorder() {
+
+        var etail = window.localStorage.getItem("username");
+
+        $.post(
+        'http://cs.ashesi.edu.gh/~kwame.boahene/getorder.php',
+        {
+           email: etail       
+               },
+            "json"     
+    ).done(function( data ) {
+      var data = JSON.parse(data);
+              console.log(data);
+              var i = 0;
+              var t= 0;
+              self.location.href = "#order-page";
+              $('#orderbody').html("");
+              while( i < data.length) {
+
+                var table = document.getElementById("orderbody");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                 cell1.appendChild(document.createTextNode(data[i]));
+                cell2.appendChild(document.createTextNode(data[i+1]));
+                cell3.appendChild(document.createTextNode(data[i+2]));
+                cell4.appendChild(document.createTextNode(data[i+3]));
+                cell5.appendChild(document.createTextNode(data[i+4]));
+                i = i +5;
+              t++;
+
+                }
+            
+            } );
+
+
+      }
+   
+
+
+
+
+
+</script>
+  </div>
+
+   <div data-role="footer"  class="footer">
+    
+      <div align="center" class="ui-nodisc-icon">
+
+      <div  class="footer_icon">
+       <a href="#welcome-page" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Home
+       </div>
+       
+       <div  class="footer_icon">
+       <a href="#search-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+       <br>Search
+       </div>
+
+       <div  class="footer_icon">
+         <a href="#admin-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+        <br>Admin
+       </div>
+
+        <div  class="footer_icon">
+         <a  href="#cart-page" class="ui-btn ui-shadow ui-corner-all ui-icon-shop ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+         <br>Cart
+       </div>
+
+        <div class="footer_icon">
+        <a href="#order-page"  class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            <br>Order
+        </div>
+
+       </div>
+ 
+
+      </div>
+
+
+            
+    </div>
+
+
+
+
+	<script type="text/javascript" src="cordova.js"></script>
+  
+    </body>
+</html>
